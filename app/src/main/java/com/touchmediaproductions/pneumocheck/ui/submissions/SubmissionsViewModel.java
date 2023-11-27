@@ -140,7 +140,12 @@ public class SubmissionsViewModel extends ViewModel {
                                         }
 
                                         // Order the list by submission date
-                                        submissionModelArrayList.sort(Comparator.comparing(SubmissionModel::getSubmissionCreationDate));
+                                        submissionModelArrayList.sort(
+                                                Comparator.comparing(
+                                                        SubmissionModel::getSubmissionCreationDate,
+                                                        Comparator.nullsLast(Comparator.naturalOrder())
+                                                )
+                                        );
 
                                         submissionsMutableLiveData.postValue(submissionModelArrayList);
                                     }
