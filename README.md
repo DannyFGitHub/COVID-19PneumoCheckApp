@@ -79,7 +79,7 @@ Danny Falero (PhD Student at Charles Sturt University)
   <img src="https://github.com/akabircs.png?size=50">
 </a>
 
-[Associate Professor Ashad Kabir](https://researchoutput.csu.edu.au/en/persons/akabircsueduau) (Project lead and Principal Supervisor)
+[Professor Ashad Kabir](https://researchoutput.csu.edu.au/en/persons/akabircsueduau) (Project lead and Principal Supervisor)
 
 
 
