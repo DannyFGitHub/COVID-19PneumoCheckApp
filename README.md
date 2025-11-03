@@ -17,7 +17,7 @@ We defined a methodology for creating a continual learning model in which we tra
   <img width="720" src="diagrams/system-architecture.png">
 </p>
 
-The mobile application uses the continual learning DenseNet161 LwF model, which was implemented on a server in the cloud. The model learns new instances of patient chest X-rays and their classification as they are submitted. The COVID-19 screening app features the ability to run a local offline foundation model and implements symptom screening methods found in related works. The app also facilitates user and submission management, COVID-19 diagnosis predictions, and survey symptom tracking.
+The mobile application uses a continual-learning DenseNet161 model with Learning without Forgetting (LwF) that is hosted on a cloud server. After a chest X-ray is validated on the device, the image and its metadata are uploaded to the server, where the model performs the full prediction and can incrementally learn from newly submitted, labelled chest X-rays. On the device, the app can run a local/offline foundation model to check that the photo is actually a chest X-ray. The app also provides user and submission management, COVID-19 diagnosis/prediction display, and symptom/survey tracking, while the cloud component is responsible for continual model updates based on confirmed or corrected diagnoses provided later by users/clinicians.
 
 #### Continual Learning Training Process (Initiated by Mobile App)
 
@@ -118,16 +118,20 @@ For best results we recommend scanning the X-Ray with a flatbed scanner and usin
 
 #### X-Ray Image:
 
-When you submit an X-Ray image and you obtain a prediction, the photo you took is stored in cache (your phones storage) until you either cancel the form or complete it. After that the image is converted into code and stored in a database specific to the PneumoCheck App.
-If you would like to force the cache to be cleared, go to Settings on the PneumoCheck app and tap clear next to Cache.
+When you add a chest X-Ray, the app first runs an offline (on-device) model to check that the image is actually a chest X-Ray. This step does not require internet.
+After the image is validated, the X-Ray is uploaded to the PneumoCheck online continual-learning server so it can run the full AI processing and be used (if you allow it) to improve future models. A temporary copy may stay on your device just long enough to finish the upload or the form, but the source of truth is the online server, not your local storage.
 
 #### Submission:
 
-Your submission (along with all the identifiable data) is stored in the app specific local database on your device. The database is not uploaded or given to any party without your consent. Exporting is only useful for research purposes at the time of writing.
+Your submission (the image reference plus any data you enter in the form) is stored in your PneumoCheck cloud record. We do not share your data with anyone unless you explicitly export and provide it for research.
 
 #### Database:
 
-The database only exists while you have the application installed, as soon as you uninstall the application, all the database entries will be removed and the database erased.
+Your data stays in the PneumoCheck cloud (Firebase) while your account/app is active. If you uninstall the app, you may remove local temporary data, but the cloud record remains until it is deleted according to our data-retention rules or you request deletion.
+
+#### Offline / failed upload cases:
+
+If you’re offline or the upload fails, the app may keep the image temporarily on your device and retry the upload later. Once the upload succeeds, the server copy is the one we use.
 
 ## If it Keeps saying invalid X-ray provided
 
@@ -139,5 +143,6 @@ If the application continues to say that the Chest X-Ray provided is not a valid
 - Make sure that the X-Ray is not severely dirty, damaged or warped.
 - Make sure the X-Ray is FLAT on the surface where it rests.
 
+# Server Status: Offline
 
 
