@@ -145,4 +145,5 @@ If the application continues to say that the Chest X-Ray provided is not a valid
 
 # Server Status: Offline
 
+For server source code: https://github.com/DannyFGitHub/covid-xray-continual-server
 
